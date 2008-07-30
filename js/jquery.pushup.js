@@ -26,12 +26,18 @@ jQuery.pushup = {
 		Opera: (jQuery.browser.opera) ? parseFloat(jQuery.browser.version) : false
 	},
 	browsers: {
-		firefox: 2,
-		msie: 7,
-		opera: 9,
-		safari: 3,
+		Firefox: 2,
+		IE: 7,
+		Opera: 9,
+		Safari: 3
 	},
 	init: function() {
+		jQuery.each(jQuery.pushup.browsVer, function(x, y) {
+			if(y && y < jQuery.pushup.browsers[x]) {
+				// Do stuff here
+			}
+		});
 	}
 }
+alert(jQuery.pushup.browsVer.IE);
 jQuery.pushup.init();
