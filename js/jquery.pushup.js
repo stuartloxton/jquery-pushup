@@ -23,8 +23,7 @@ jQuery.pushup = {
 	    reminder: {
 	    	hours: 6,
 	    	message: 'Remind me again in #{hours}'
-	    },
-	    skip: true
+	    }
 	},
 	updateLinks: {
 		IE: 'http://www.microsoft.com/windows/downloads/ie/',

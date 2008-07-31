@@ -1,0 +1,37 @@
+h1. jQuery Pushup
+
+jQuery pushup is a direct port of "pushup":http://pushuptheweb.com/ by "Nick Stakenburg":http://www.nickstakenburg.com/. It's designed to use the built in features of jQuery to reduce file-size + unneeded duplication of functions (prototype opacity Vs. jQuery fade). 
+
+h3. Installation
+
+Download the jQuery pushup and place CSS, JS and images where needed. If you use a different file structure than the on provided than make sure you change the image URL in @jquery.pushup.js@.
+
+*DO _NOT_ rename jquery.pushup.js, it's file name is used inside the script.*
+
+h3. Options
+
+To change the options open up @js/jquery.pushup.js@ where the beginning of the file will have some options you can change.
+
+@appearDelay@: Delay in seconds before Pushup fades in.
+@fadeDelay@: Delay in seconds before Pushup fades out.
+@images@: Location of the images relative to @jQuery.pushup.js@ (absolute URL's are allowed; both @http://@ _and_ @/@)
+@message@: The update message users will see when their browser needs an update.
+@reminder.hours@: Time in hours used when clicked on the reminder message.
+@reminder.message@: The reminder message, @#{hours}@ will be replaced by reminder.hours.
+
+h3. Functions
+
+@jQuery.pushup.init()@: This is called on document load, it tests to see if a pushup message should be shown and if so then shows one.
+@jQuery.pushup.show([browser, options])@: Shows the pushup message, you can overwrite the browser shown by using the @browser: String@ parameter.
+@jQuery.pushup.hide()@: Hides currently shown pushup message.
+@jQuery.pushup.setReminder(hours)@: Set a cookie that prevents pushup from showing for @hours@ amount of time.
+@jQuery.pushup.reserReminder()@: Resets the reminder time so that Pushup will show up on the next visit, if required.
+
+h3. More:
+
+If you don't want to have the @jQuery.pushup.init()@ called on DOM ready then remove it from the bottom of @jquery.pushup.js@.
+
+h3. TODO:
+
+ * Refractor more and reduce bloat.
+ * Setup options for @show()@
