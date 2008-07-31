@@ -66,7 +66,10 @@ jQuery.pushup = {
 		elm.style.display = 'none';
 		elm.id = 'pushup';
 		jQuery('body').prepend(elm);
-		jQuery('#pushup').append('<a class="pushup_messageLink" target="_blank" href=""><div class="pushup_icon" style=""/><span class="pushup_message"></span></a>');
+		icon = jQuery(document.createElement('div')).addClass('pushup_icon');
+		message = jQuery(document.createElement('span')).addClass('pushup_message');
+		messagelink = jQuery(document.createElement('a')).addClass('pushup_messageLink').attr('target', '_blank').append(icon).append(message);
+		jQuery('#pushup').append(messagelink);
 		jQuery('.pushup_message').html(jQuery.pushup.options.message);
 		
 		var hours = jQuery.pushup.options.reminder.hours;
