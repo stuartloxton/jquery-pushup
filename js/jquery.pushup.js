@@ -90,9 +90,13 @@ jQuery.pushup = {
 				}
 			});
 		}
-		jQuery('.pushup_icon').css({
-			background: 'url('+imgSrc+browser.toLowerCase()+'.png) no-repeat top left'	
-		});
+		styles = (jQuery.pushup.browsVer.IE < 7 && jQuery.pushup.browsVer.IE) ? {
+			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' +
+		      imgSrc+browser.toLowerCase()  + '.png\'\', sizingMethod=\'crop\')'
+		} : {
+			background: 'url('+imgSrc+browser.toLowerCase()+'.png) no-repeat top left'
+		}
+		jQuery('.pushup_icon').css(styles);
 		
 		jQuery('#pushup').fadeIn('slow');
 		if(jQuery.pushup.options.fadeDelay != undefined) {
