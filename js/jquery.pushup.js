@@ -51,15 +51,18 @@ jQuery.pushup = {
 					Cookie.get('_pushupBlocked')) { return; } else {
 						if(jQuery.pushup.options.appearDelay != undefined) {
 							time = jQuery.pushup.options.appearDelay * 1000;
-							setTimeout('jQuery.pushup.showMessage(x)', time);
+							setTimeout('jQuery.pushup.show(x)', time);
 						} else {
-							jQuery.pushup.showMessage(x)
+							jQuery.pushup.show(x)
 						}
 				}
 			}
 		});
 	},
-	showMessage: function(browser) {
+	show: function() {
+		browser = typeof arguments[0] == 'string' ?
+	      arguments[0] : jQuery.pushup.browserUsed || 'IE',
+	    	options = arguments[browser ? 1 : 0] || {};
 		elm = document.createElement('div');
 		elm.style.display = 'none';
 		elm.id = 'pushup';
@@ -74,12 +77,11 @@ jQuery.pushup = {
 			message = jQuery.pushup.options.reminder.message.replace('#{hours}', H);
 			jQuery('#pushup a:last').attr('href', '#').addClass('pushup_reminder').html(message);
 			jQuery('.pushup_reminder').click(function() {
-				Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * jQuery.pushup.options.reminder.hours })
-				jQuery.pushup.hideMessage();
+				jQuery.pushup.setReminder(jQuery.pushup.options.reminder.hours);
+				jQuery.pushup.hide();
 				return false;
 			});
 		}
-		
 		if(/^http\:\/\//.test(jQuery.pushup.options.images) || /^\//.test(jQuery.pushup.options.images)) {
 			imgSrc = jQuery.pushup.options.images;
 		} else {
@@ -97,19 +99,26 @@ jQuery.pushup = {
 			background: 'url('+imgSrc+browser.toLowerCase()+'.png) no-repeat top left'
 		}
 		jQuery('.pushup_icon').css(styles);
-		
 		jQuery('#pushup').fadeIn('slow');
 		if(jQuery.pushup.options.fadeDelay != undefined) {
 			time = jQuery.pushup.options.fadeDelay * 1000;
-			setTimeout('jQuery.pushup.hideMessage()', time);
-		} else {
-			jQuery.pushup.showMessage(x)
+			setTimeout('jQuery.pushup.hide()', time);
 		}
 	},
-	hideMessage: function() {
+	hide: function() {
 		jQuery('#pushup').fadeOut('slow');
-	}
+	},
+	setReminder: function(hours) {
+		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours })
+	},
+	resetReminder: function() { Cookie.remove('_pushupBlocked') }
+	
 }
+jQuery.each(jQuery.pushup.browsVer, function(x,y) {
+	if(y) {
+		jQuery.pushup.browserUsed = x;
+	}
+})
 
 // Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
