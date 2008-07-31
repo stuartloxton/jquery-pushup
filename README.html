@@ -1,0 +1,52 @@
+<h1>jQuery Pushup</h1>
+
+
+	<p>jQuery pushup is a direct port of <a href="http://pushuptheweb.com/">pushup</a> by <a href="http://www.nickstakenburg.com/">Nick Stakenburg</a>. It&#8217;s designed to use the built in features of jQuery to reduce file-size + unneeded duplication of functions (prototype opacity Vs. jQuery fade).</p>
+
+
+	<h3>Installation</h3>
+
+
+	<p>Download the jQuery pushup and place <span class="caps">CSS</span>, JS and images where needed. If you use a different file structure than the on provided than make sure you change the image <span class="caps">URL</span> in <code>jquery.pushup.js</code>.</p>
+
+
+	<p><strong>DO <em><span class="caps">NOT</span></em> rename jquery.pushup.js, it&#8217;s file name is used inside the script.</strong></p>
+
+
+	<h3>Options</h3>
+
+
+	<p>To change the options open up <code>js/jquery.pushup.js</code> where the beginning of the file will have some options you can change.</p>
+
+
+	<p><code>appearDelay</code>: Delay in seconds before Pushup fades in.
+<code>fadeDelay</code>: Delay in seconds before Pushup fades out.
+<code>images</code>: Location of the images relative to <code>jQuery.pushup.js</code> (absolute <span class="caps">URL</span>&#8217;s are allowed; both <code>http://</code> <em>and</em> <code>/</code>)
+<code>message</code>: The update message users will see when their browser needs an update.
+<code>reminder.hours</code>: Time in hours used when clicked on the reminder message.
+<code>reminder.message</code>: The reminder message, <code>#{hours}</code> will be replaced by reminder.hours.</p>
+
+
+	<h3>Functions</h3>
+
+
+	<p><code>jQuery.pushup.init()</code>: This is called on document load, it tests to see if a pushup message should be shown and if so then shows one.
+<code>jQuery.pushup.show([browser, options])</code>: Shows the pushup message, you can overwrite the browser shown by using the <code>browser: String</code> parameter.
+<code>jQuery.pushup.hide()</code>: Hides currently shown pushup message.
+<code>jQuery.pushup.setReminder(hours)</code>: Set a cookie that prevents pushup from showing for <code>hours</code> amount of time.
+<code>jQuery.pushup.reserReminder()</code>: Resets the reminder time so that Pushup will show up on the next visit, if required.</p>
+
+
+	<h3>More:</h3>
+
+
+	<p>If you don&#8217;t want to have the <code>jQuery.pushup.init()</code> called on <span class="caps">DOM</span> ready then remove it from the bottom of <code>jquery.pushup.js</code>.</p>
+
+
+	<h3><span class="caps">TODO</span>:</h3>
+
+
+	<ul>
+	<li>Refractor more and reduce bloat.</li>
+		<li>Setup options for <code>show()</code></li>
+	</ul>
