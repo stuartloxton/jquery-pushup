@@ -1,4 +1,17 @@
-/* Small additions to jQuery core */
+/* 
+ * Original Copyright
+ * 
+ * Pushup
+ * Copyright (c) 2008 Nick Stakenburg (www.nickstakenburg.com)
+ *
+ * License: MIT-style license.
+ * Website: http://www.pushuptheweb.com
+ *
+ */
+
+/* 
+ * Modified for jQuery by Stuart Loxton (www.stuartloxton.com)
+*/
 
 jQuery.pushup = {
 	Version: '0.1.0',
@@ -35,7 +48,14 @@ jQuery.pushup = {
 		jQuery.each(jQuery.pushup.browsVer, function(x, y) {
 			if(y && y < jQuery.pushup.browsers[x]) {
 				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled &&
-					Cookie.get('_pushupBlocked')) { return } else { jQuery.pushup.showMessage(x) };
+					Cookie.get('_pushupBlocked')) { return; } else {
+						if(jQuery.pushup.options.appearDelay != undefined) {
+							time = jQuery.pushup.options.appearDelay * 1000;
+							setTimeout('jQuery.pushup.showMessage(x)', time);
+						} else {
+							jQuery.pushup.showMessage(x)
+						}
+				}
 			}
 		});
 	},
@@ -74,13 +94,20 @@ jQuery.pushup = {
 			background: 'url('+imgSrc+browser.toLowerCase()+'.png) no-repeat top left'	
 		});
 		
-		
 		jQuery('#pushup').fadeIn('slow');
+		if(jQuery.pushup.options.fadeDelay != undefined) {
+			time = jQuery.pushup.options.fadeDelay * 1000;
+			setTimeout('jQuery.pushup.hideMessage()', time);
+		} else {
+			jQuery.pushup.showMessage(x)
+		}
 	},
 	hideMessage: function() {
 		jQuery('#pushup').fadeOut('slow');
 	}
 }
+
+// Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
   set: function(name, value) {
     var expires = '', options = arguments[2] || {};
