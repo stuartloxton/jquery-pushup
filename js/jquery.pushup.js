@@ -16,14 +16,14 @@
 jQuery.pushup = {
 	Version: '0.1.0',
 	options: {
-		appearDelay: .5,
-	    fadeDelay: 6,
-	    images: '../images/pushup/',
-	    message: 'Important browser update available',
-	    reminder: {
-	    	hours: 6,
-	    	message: 'Remind me again in #{hours}'
-	    }
+		appearDelay: 0.5,
+		fadeDelay: 6,
+		images: '../images/pushup/',
+		message: 'Important browser update available',
+		reminder: {
+			hours: 6,
+			message: 'Remind me again in #{hours}'
+		}
 	},
 	updateLinks: {
 		IE: 'http://www.microsoft.com/windows/downloads/ie/',
@@ -38,7 +38,7 @@ jQuery.pushup = {
 		Opera: (jQuery.browser.opera) ? parseFloat(jQuery.browser.version) : false
 	},
 	browsers: {
-		Firefox: 3,
+		Firefox: 2,
 		IE: 7,
 		Opera: 9,
 		Safari: 3
@@ -46,22 +46,16 @@ jQuery.pushup = {
 	init: function() {
 		jQuery.each(jQuery.pushup.browsVer, function(x, y) {
 			if(y && y < jQuery.pushup.browsers[x]) {
-				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled &&
-					Cookie.get('_pushupBlocked')) { return; } else {
-						if(jQuery.pushup.options.appearDelay != undefined) {
-							time = jQuery.pushup.options.appearDelay * 1000;
-							setTimeout('jQuery.pushup.show(x)', time);
-						} else {
-							jQuery.pushup.show(x)
-						}
+				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { return; } else {
+					time = (jQuery.pushup.options.appearDelay != undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
+					setTimeout('jQuery.pushup.show(jQuery.pushup.browserUsed)', time);
 				}
 			}
 		});
 	},
 	show: function() {
 		browser = typeof arguments[0] == 'string' ?
-	      arguments[0] : jQuery.pushup.browserUsed || 'IE',
-	    	options = arguments[browser ? 1 : 0] || {};
+		arguments[0] : jQuery.pushup.browserUsed || 'IE';
 		elm = document.createElement('div');
 		elm.style.display = 'none';
 		elm.id = 'pushup';
@@ -74,10 +68,10 @@ jQuery.pushup = {
 		
 		var hours = jQuery.pushup.options.reminder.hours;
 		if (hours && jQuery.pushup.cookiesEnabled) {
-			jQuery('#pushup').addClass('withReminder').append(document.createElement('a'));
 			var H = hours + ' hour' + (hours > 1 ? 's' : ''),
 			message = jQuery.pushup.options.reminder.message.replace('#{hours}', H);
-			jQuery('#pushup a:last').attr('href', '#').addClass('pushup_reminder').html(message);
+			hourelem = jQuery(document.createElement('a')).attr('href', '#').addClass('pushup_reminder').html(message);
+			jQuery('#pushup').append(hourelem);
 			jQuery('.pushup_reminder').click(function() {
 				jQuery.pushup.setReminder(jQuery.pushup.options.reminder.hours);
 				jQuery.pushup.hide();
@@ -107,9 +101,7 @@ jQuery.pushup = {
 			setTimeout('jQuery.pushup.hide()', time);
 		}
 	},
-	hide: function() {
-		jQuery('#pushup').fadeOut('slow');
-	},
+	hide: function() { jQuery('#pushup').fadeOut('slow'); },
 	setReminder: function(hours) {
 		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours })
 	},

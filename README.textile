@@ -8,6 +8,13 @@ Download the jQuery pushup and place CSS, JS and images where needed. If you use
 
 *DO _NOT_ rename jquery.pushup.js, it's file name is used inside the script.*
 
+h3. Changes between original
+
+There are quite a few small diferences between this script and the original "pushup.js":http://pushuptheweb.com/
+
+* Uses jQuery - duh; but this means smaller file, and easier to read.
+* Allows for changing min browser, want FireFox 2 uesrs to upgrade to 3? Just change @jQuery.pushup.browsers@.
+
 h3. Options
 
 To change the options open up @js/jquery.pushup.js@ where the beginning of the file will have some options you can change.
@@ -18,6 +25,7 @@ To change the options open up @js/jquery.pushup.js@ where the beginning of the f
 * @message@: The update message users will see when their browser needs an update.
 * @reminder.hours@: Time in hours used when clicked on the reminder message.
 * @reminder.message@: The reminder message, @#{hours}@ will be replaced by reminder.hours.
+* *Bonus* @jQuery.pushup.browsers@ is an easier way to change minimum browser versions.
 
 h3. Functions
 
