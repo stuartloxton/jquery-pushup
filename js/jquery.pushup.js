@@ -14,7 +14,7 @@
 */
 
 jQuery.pushup = {
-	Version: '0.1.0',
+	Version: '1.0.1',
 	options: {
 		appearDelay: 0.5,
 		fadeDelay: 6,
@@ -78,7 +78,7 @@ jQuery.pushup = {
 				return false;
 			});
 		}
-		if(/^http\:\/\//.test(jQuery.pushup.options.images) || /^\//.test(jQuery.pushup.options.images)) {
+		if(/^(https?:\/\/|\/)/.test(this.options.images)) {
 			imgSrc = jQuery.pushup.options.images;
 		} else {
 			jQuery('script[src]').each(function(x, y) {
