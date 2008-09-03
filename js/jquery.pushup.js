@@ -14,7 +14,7 @@
 */
 
 jQuery.pushup = {
-	Version: '1.0.1',
+	Version: '1.0.2',
 	options: {
 		appearDelay: 0.5,
 		fadeDelay: 6,
@@ -25,6 +25,7 @@ jQuery.pushup = {
 			message: 'Remind me again in #{hours}'
 		}
 	},
+	activeBrowser: null,
 	updateLinks: {
 		IE: 'http://www.microsoft.com/windows/downloads/ie/',
 		Firefox: 'http://www.getfirefox.com',
@@ -46,16 +47,16 @@ jQuery.pushup = {
 	init: function() {
 		jQuery.each(jQuery.pushup.browsVer, function(x, y) {
 			if(y && y < jQuery.pushup.browsers[x]) {
+				jQuery.pushup.activeBrowser = x;
 				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { return; } else {
 					time = (jQuery.pushup.options.appearDelay != undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
-					setTimeout('jQuery.pushup.show(jQuery.pushup.browserUsed)', time);
+					setTimeout('jQuery.pushup.show()', time);
 				}
 			}
 		});
 	},
 	show: function() {
-		browser = typeof arguments[0] == 'string' ?
-		arguments[0] : jQuery.pushup.browserUsed || 'IE';
+		browser = typeof arguments[0] == 'string' ? arguments[0] : jQuery.pushup.browserUsed || 'IE';
 		elm = document.createElement('div');
 		elm.style.display = 'none';
 		elm.id = 'pushup';
@@ -63,6 +64,7 @@ jQuery.pushup = {
 		icon = jQuery(document.createElement('div')).addClass('pushup_icon');
 		message = jQuery(document.createElement('span')).addClass('pushup_message');
 		messagelink = jQuery(document.createElement('a')).addClass('pushup_messageLink').attr('target', '_blank').append(icon).append(message);
+		messagelink.attr("href", jQuery.pushup.updateLinks[jQuery.pushup.activeBrowser]);
 		jQuery('#pushup').append(messagelink);
 		jQuery('.pushup_message').html(jQuery.pushup.options.message);
 		
@@ -88,11 +90,12 @@ jQuery.pushup = {
 				}
 			});
 		}
+		image = imgSrc+jQuery.pushup.activeBrowser.toLowerCase();
+		alert(image);
 		styles = (jQuery.pushup.browsVer.IE < 7 && jQuery.pushup.browsVer.IE) ? {
-			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' +
-		      imgSrc+browser.toLowerCase()  + '.png\'\', sizingMethod=\'crop\')'
+			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\''+image+'.png\'\', sizingMethod=\'crop\')'
 		} : {
-			background: 'url('+imgSrc+browser.toLowerCase()+'.png) no-repeat top left'
+			background: 'url('+image+'.png) no-repeat top left'
 		}
 		jQuery('.pushup_icon').css(styles);
 		jQuery('#pushup').fadeIn('slow');
@@ -108,11 +111,11 @@ jQuery.pushup = {
 	resetReminder: function() { Cookie.remove('_pushupBlocked') }
 	
 }
-jQuery.each(jQuery.pushup.browsVer, function(x,y) {
-	if(y) {
-		jQuery.pushup.browserUsed = x;
-	}
-})
+// jQuery.each(jQuery.pushup.browsVer, function(x,y) {
+// 	if(y) {
+// 		jQuery.pushup.activeBrowser = x;
+// 	}
+// })
 
 // Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
