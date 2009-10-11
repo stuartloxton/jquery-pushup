@@ -39,9 +39,9 @@ jQuery.pushup = {
 		Opera: (jQuery.browser.opera) ? parseFloat(jQuery.browser.version) : false
 	},
 	browsers: {
-		Firefox: 2,
+		Firefox: 3,
 		IE: 7,
-		Opera: 9,
+		Opera: 9.5,
 		Safari: 3
 	},
 	init: function() {
