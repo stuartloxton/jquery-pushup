@@ -48,7 +48,9 @@ jQuery.pushup = {
 		jQuery.each(jQuery.pushup.browsVer, function (x, y) {
 			if (y && y < jQuery.pushup.browsers[x]) {
 				jQuery.pushup.activeBrowser = x;
-				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { return; } else {
+				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { 
+				    return; 
+				} else {
 					time = (jQuery.pushup.options.appearDelay != undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
 					setTimeout('jQuery.pushup.show()', time);
 				}
@@ -104,11 +106,15 @@ jQuery.pushup = {
 			setTimeout('jQuery.pushup.hide()', time);
 		}
 	},
-	hide: function () { jQuery('#pushup').fadeOut('slow'); },
+	hide: function () { 
+	    jQuery('#pushup').fadeOut('slow'); 
+	},
 	setReminder: function (hours) {
 		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours })
 	},
-	resetReminder: function () { Cookie.remove('_pushupBlocked') }
+	resetReminder: function () { 
+	    Cookie.remove('_pushupBlocked') 
+	}
 	
 }
 // jQuery.each(jQuery.pushup.browsVer, function(x,y) {
@@ -119,35 +125,38 @@ jQuery.pushup = {
 
 // Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
-  set: function (name, value) {
-    var expires = '', options = arguments[2] || {};
-    if (options.duration) {
-      var date = new Date();
-      date.setTime(date.getTime() + options.duration * 1000 * 60 * 60 * 24);
-      value += '; expires=' + date.toGMTString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-  },
+    set: function (name, value) {
+        var expires = '', options = arguments[2] || {};
+        if (options.duration) {
+            var date = new Date();
+            date.setTime(date.getTime() + options.duration * 1000 * 60 * 60 * 24);
+            value += '; expires=' + date.toGMTString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    },
 
-  remove: function (name) { this.set(name, '', -1) },
+    remove: function (name) { 
+        this.set(name, '', -1) 
+    },
 
-  get: function (name) {
-    var cookies = document.cookie.split(';'), nameEQ = name + "=";
-    for (var i = 0, l = cookies.length; i < l; i++) {
-      var c = cookies[i];
-      while (c.charAt(0) == ' ')
-        c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0)
-        return c.substring(nameEQ.length, c.length);
+    get: function (name) {
+        var cookies = document.cookie.split(';'), nameEQ = name + "=";
+        for (var i = 0, l = cookies.length; i < l; i++) {
+            var c = cookies[i];
+            while (c.charAt(0) == ' ')
+                c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0)
+                return c.substring(nameEQ.length, c.length);
+        }
+        return null;
     }
-    return null;
-  }
 };
 jQuery.pushup.cookiesEnabled = (function (test) {
-  if (Cookie.get(test)) return true;
-  Cookie.set(test, 'test', { duration: 15 });
-  return Cookie.get(test);
+    if (Cookie.get(test)) 
+        return true;
+    Cookie.set(test, 'test', { duration: 15 });
+    return Cookie.get(test);
 })('_pushupCookiesEnabled');
 jQuery(function () {
-	jQuery.pushup.init();
+    jQuery.pushup.init();
 });
