@@ -51,7 +51,7 @@ jQuery.pushup = {
 				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { 
 				    return; 
 				} else {
-					time = (jQuery.pushup.options.appearDelay != undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
+					time = (jQuery.pushup.options.appearDelay !== undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
 					setTimeout('jQuery.pushup.show()', time);
 				}
 			}
@@ -101,7 +101,7 @@ jQuery.pushup = {
 		}
 		jQuery('.pushup_icon').css(styles);
 		jQuery('#pushup').fadeIn('slow');
-		if (jQuery.pushup.options.fadeDelay != undefined) {
+		if (jQuery.pushup.options.fadeDelay !== undefined) {
 			time = jQuery.pushup.options.fadeDelay * 1000;
 			setTimeout('jQuery.pushup.hide()', time);
 		}
