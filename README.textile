@@ -33,7 +33,7 @@ h3. Functions
 * @jQuery.pushup.show([browser, options])@: Shows the pushup message, you can overwrite the browser shown by using the @browser: String@ parameter.
 * @jQuery.pushup.hide()@: Hides currently shown pushup message.
 * @jQuery.pushup.setReminder(hours)@: Set a cookie that prevents pushup from showing for @hours@ amount of time.
-* @jQuery.pushup.reserReminder()@: Resets the reminder time so that Pushup will show up on the next visit, if required.
+* @jQuery.pushup.resetReminder()@: Resets the reminder time so that Pushup will show up on the next visit, if required.
 
 h3. More:
 
@@ -41,5 +41,5 @@ If you don't want to have the @jQuery.pushup.init()@ called on DOM ready then re
 
 h3. TODO:
 
- * Refractor more and reduce bloat.
+ * Refactor more and reduce bloat.
  * Setup options for @show()@
