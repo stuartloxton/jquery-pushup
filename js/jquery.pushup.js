@@ -44,9 +44,9 @@ jQuery.pushup = {
 		Opera: 9.5,
 		Safari: 3
 	},
-	init: function() {
-		jQuery.each(jQuery.pushup.browsVer, function(x, y) {
-			if(y && y < jQuery.pushup.browsers[x]) {
+	init: function () {
+		jQuery.each(jQuery.pushup.browsVer, function (x, y) {
+			if (y && y < jQuery.pushup.browsers[x]) {
 				jQuery.pushup.activeBrowser = x;
 				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { return; } else {
 					time = (jQuery.pushup.options.appearDelay != undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
@@ -55,7 +55,7 @@ jQuery.pushup = {
 			}
 		});
 	},
-	show: function() {
+	show: function () {
 		browser = typeof arguments[0] == 'string' ? arguments[0] : jQuery.pushup.browserUsed || 'IE';
 		elm = document.createElement('div');
 		elm.style.display = 'none';
@@ -74,41 +74,41 @@ jQuery.pushup = {
 			message = jQuery.pushup.options.reminder.message.replace('#{hours}', H);
 			hourelem = jQuery(document.createElement('a')).attr('href', '#').addClass('pushup_reminder').html(message);
 			jQuery('#pushup').append(hourelem);
-			jQuery('.pushup_reminder').click(function() {
+			jQuery('.pushup_reminder').click(function () {
 				jQuery.pushup.setReminder(jQuery.pushup.options.reminder.hours);
 				jQuery.pushup.hide();
 				return false;
 			});
 		}
-		if(/^(https?:\/\/|\/)/.test(this.options.images)) {
+		if (/^(https?:\/\/|\/)/.test(this.options.images)) {
 			imgSrc = jQuery.pushup.options.images;
 		} else {
-			jQuery('script[src]').each(function(x, y) {
-				if(/jquery\.pushup/.test(jQuery(y).attr('src'))) {
+			jQuery('script[src]').each(function (x, y) {
+				if (/jquery\.pushup/.test(jQuery(y).attr('src'))) {
 					srcFol =  jQuery(y).attr('src').replace('jquery.pushup.js', '');
 					imgSrc = srcFol + jQuery.pushup.options.images;
 				}
 			});
 		}
-		image = imgSrc+jQuery.pushup.activeBrowser.toLowerCase();
+		image = imgSrc + jQuery.pushup.activeBrowser.toLowerCase();
 		alert(image);
 		styles = (jQuery.pushup.browsVer.IE < 7 && jQuery.pushup.browsVer.IE) ? {
-			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\''+image+'.png\'\', sizingMethod=\'crop\')'
+			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + image + '.png\'\', sizingMethod=\'crop\')'
 		} : {
-			background: 'url('+image+'.png) no-repeat top left'
+			background: 'url(' + image + '.png) no-repeat top left'
 		}
 		jQuery('.pushup_icon').css(styles);
 		jQuery('#pushup').fadeIn('slow');
-		if(jQuery.pushup.options.fadeDelay != undefined) {
+		if (jQuery.pushup.options.fadeDelay != undefined) {
 			time = jQuery.pushup.options.fadeDelay * 1000;
 			setTimeout('jQuery.pushup.hide()', time);
 		}
 	},
-	hide: function() { jQuery('#pushup').fadeOut('slow'); },
-	setReminder: function(hours) {
+	hide: function () { jQuery('#pushup').fadeOut('slow'); },
+	setReminder: function (hours) {
 		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours })
 	},
-	resetReminder: function() { Cookie.remove('_pushupBlocked') }
+	resetReminder: function () { Cookie.remove('_pushupBlocked') }
 	
 }
 // jQuery.each(jQuery.pushup.browsVer, function(x,y) {
@@ -119,7 +119,7 @@ jQuery.pushup = {
 
 // Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
-  set: function(name, value) {
+  set: function (name, value) {
     var expires = '', options = arguments[2] || {};
     if (options.duration) {
       var date = new Date();
@@ -129,25 +129,25 @@ var Cookie = {
     document.cookie = name + "=" + value + expires + "; path=/";
   },
 
-  remove: function(name) { this.set(name, '', -1) },
+  remove: function (name) { this.set(name, '', -1) },
 
-  get: function(name) {
+  get: function (name) {
     var cookies = document.cookie.split(';'), nameEQ = name + "=";
     for (var i = 0, l = cookies.length; i < l; i++) {
       var c = cookies[i];
       while (c.charAt(0) == ' ')
-        c = c.substring(1,c.length);
+        c = c.substring(1, c.length);
       if (c.indexOf(nameEQ) == 0)
         return c.substring(nameEQ.length, c.length);
     }
     return null;
   }
 };
-jQuery.pushup.cookiesEnabled = (function(test) {
+jQuery.pushup.cookiesEnabled = (function (test) {
   if (Cookie.get(test)) return true;
   Cookie.set(test, 'test', { duration: 15 });
   return Cookie.get(test);
 })('_pushupCookiesEnabled');
-jQuery(function() {
+jQuery(function () {
 	jQuery.pushup.init();
 });
