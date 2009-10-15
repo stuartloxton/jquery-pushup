@@ -150,11 +150,6 @@
 	    }
     	
     };
-    // $.each($.pushup.browsVer, function(x,y) {
-    // 	if(y) {
-    // 		$.pushup.activeBrowser = x;
-    // 	}
-    // })
 
     $.pushup.cookiesEnabled = (function (test) {
         if (Cookie.get(test)) {
