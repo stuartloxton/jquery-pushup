@@ -16,9 +16,9 @@
 // Based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
     set: function (name, value) {
-        var expires = '', options = arguments[2] || {};
+        var expires = '', options = arguments[2] || {}, date;
         if (options.duration) {
-            var date = new Date();
+            date = new Date();
             date.setTime(date.getTime() + options.duration * 1000 * 60 * 60 * 24);
             value += '; expires=' + date.toGMTString();
         }
@@ -30,9 +30,9 @@ var Cookie = {
     },
 
     get: function (name) {
-        var cookies = document.cookie.split(';'), nameEQ = name + "=";
-        for (var i = 0, l = cookies.length; i < l; i++) {
-            var c = cookies[i];
+        var cookies = document.cookie.split(';'), nameEQ = name + "=", i, l, c;
+        for (i = 0, l = cookies.length; i < l; i++) {
+            c = cookies[i];
             while (c.charAt(0) === ' ') {
                 c = c.substring(1, c.length);
             }
@@ -82,31 +82,32 @@ jQuery.pushup = {
 				if (!jQuery.pushup.options.ignoreReminder && jQuery.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { 
 				    return; 
 				} else {
-					time = (jQuery.pushup.options.appearDelay !== undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
+					var time = (jQuery.pushup.options.appearDelay !== undefined) ? jQuery.pushup.options.appearDelay * 1000 : 0;
 					setTimeout('jQuery.pushup.show()', time);
 				}
 			}
 		});
 	},
 	show: function () {
+	    var browser, $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
 		browser = typeof arguments[0] == 'string' ? arguments[0] : jQuery.pushup.browserUsed || 'IE';
-		elm = document.createElement('div');
-		elm.style.display = 'none';
-		elm.id = 'pushup';
-		jQuery('body').prepend(elm);
-		icon = jQuery(document.createElement('div')).addClass('pushup_icon');
-		message = jQuery(document.createElement('span')).addClass('pushup_message');
-		messagelink = jQuery(document.createElement('a')).addClass('pushup_messageLink').attr('target', '_blank').append(icon).append(message);
-		messagelink.attr("href", jQuery.pushup.updateLinks[jQuery.pushup.activeBrowser]);
-		jQuery('#pushup').append(messagelink);
+		$elm = document.createElement('div');
+		$elm.style.display = 'none';
+		$elm.id = 'pushup';
+		jQuery('body').prepend($elm);
+		$icon = jQuery(document.createElement('div')).addClass('pushup_icon');
+		$message = jQuery(document.createElement('span')).addClass('pushup_message');
+		$messageLink = jQuery(document.createElement('a')).addClass('pushup_messageLink').attr('target', '_blank').append($icon).append($message);
+		$messageLink.attr("href", jQuery.pushup.updateLinks[jQuery.pushup.activeBrowser]);
+		jQuery('#pushup').append($messageLink);
 		jQuery('.pushup_message').html(jQuery.pushup.options.message);
 		
-		var hours = jQuery.pushup.options.reminder.hours;
+		hours = jQuery.pushup.options.reminder.hours;
 		if (hours && jQuery.pushup.cookiesEnabled) {
-			var H = hours + ' hour' + (hours > 1 ? 's' : ''),
-			message = jQuery.pushup.options.reminder.message.replace('#{hours}', H);
-			hourelem = jQuery(document.createElement('a')).attr('href', '#').addClass('pushup_reminder').html(message);
-			jQuery('#pushup').append(hourelem);
+			H = hours + ' hour' + (hours > 1 ? 's' : '');
+			messageText = jQuery.pushup.options.reminder.message.replace('#{hours}', H);
+			$hourElem = jQuery(document.createElement('a')).attr('href', '#').addClass('pushup_reminder').html(messageText);
+			jQuery('#pushup').append($hourElem);
 			jQuery('.pushup_reminder').click(function () {
 				jQuery.pushup.setReminder(jQuery.pushup.options.reminder.hours);
 				jQuery.pushup.hide();
