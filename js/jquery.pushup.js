@@ -14,7 +14,7 @@
 */
 
 jQuery.pushup = {
-	Version: '1.0.2',
+	Version: '1.0.3',
 	options: {
 		appearDelay: 0.5,
 		fadeDelay: 6,
