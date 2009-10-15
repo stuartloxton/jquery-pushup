@@ -13,6 +13,37 @@
  * Modified for jQuery by Stuart Loxton (www.stuartloxton.com)
 */
 
+// Based on the work of Peter-Paul Koch - http://www.quirksmode.org
+var Cookie = {
+    set: function (name, value) {
+        var expires = '', options = arguments[2] || {};
+        if (options.duration) {
+            var date = new Date();
+            date.setTime(date.getTime() + options.duration * 1000 * 60 * 60 * 24);
+            value += '; expires=' + date.toGMTString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    },
+
+    remove: function (name) { 
+        this.set(name, '', -1);
+    },
+
+    get: function (name) {
+        var cookies = document.cookie.split(';'), nameEQ = name + "=";
+        for (var i = 0, l = cookies.length; i < l; i++) {
+            var c = cookies[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1, c.length);
+            }
+            if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+        }
+        return null;
+    }
+};
+
 jQuery.pushup = {
 	Version: '1.0.3',
 	options: {
@@ -123,36 +154,6 @@ jQuery.pushup = {
 // 	}
 // })
 
-// Based on the work of Peter-Paul Koch - http://www.quirksmode.org
-var Cookie = {
-    set: function (name, value) {
-        var expires = '', options = arguments[2] || {};
-        if (options.duration) {
-            var date = new Date();
-            date.setTime(date.getTime() + options.duration * 1000 * 60 * 60 * 24);
-            value += '; expires=' + date.toGMTString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    },
-
-    remove: function (name) { 
-        this.set(name, '', -1);
-    },
-
-    get: function (name) {
-        var cookies = document.cookie.split(';'), nameEQ = name + "=";
-        for (var i = 0, l = cookies.length; i < l; i++) {
-            var c = cookies[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1, c.length);
-            }
-            if (c.indexOf(nameEQ) === 0) {
-                return c.substring(nameEQ.length, c.length);
-            }
-        }
-        return null;
-    }
-};
 jQuery.pushup.cookiesEnabled = (function (test) {
     if (Cookie.get(test)) {
         return true;
