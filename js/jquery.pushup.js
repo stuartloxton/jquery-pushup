@@ -90,7 +90,7 @@ jQuery.pushup = {
 	},
 	show: function () {
 	    var browser, $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
-		browser = typeof arguments[0] == 'string' ? arguments[0] : jQuery.pushup.browserUsed || 'IE';
+		browser = typeof arguments[0] === 'string' ? arguments[0] : jQuery.pushup.browserUsed || 'IE';
 		$elm = document.createElement('div');
 		$elm.style.display = 'none';
 		$elm.id = 'pushup';
