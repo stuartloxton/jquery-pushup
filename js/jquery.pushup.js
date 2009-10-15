@@ -13,7 +13,7 @@
  * Modified for jQuery by Stuart Loxton (www.stuartloxton.com)
 */
 
-// Based on the work of Peter-Paul Koch - http://www.quirksmode.org
+// Cookie plugin based on the work of Peter-Paul Koch - http://www.quirksmode.org
 var Cookie = {
     set: function (name, value) {
         var expires = '', options = arguments[2] || {}, date;
