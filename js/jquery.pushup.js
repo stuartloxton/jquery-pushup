@@ -161,7 +161,7 @@ jQuery.pushup.cookiesEnabled = (function (test) {
     }
     Cookie.set(test, 'test', { duration: 15 });
     return Cookie.get(test);
-})('_pushupCookiesEnabled');
+}('_pushupCookiesEnabled'));
 jQuery(function () {
     jQuery.pushup.init();
 });
