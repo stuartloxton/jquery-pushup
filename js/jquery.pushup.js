@@ -98,7 +98,7 @@ jQuery.pushup = {
 			filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + image + '.png\'\', sizingMethod=\'crop\')'
 		} : {
 			background: 'url(' + image + '.png) no-repeat top left'
-		}
+		};
 		jQuery('.pushup_icon').css(styles);
 		jQuery('#pushup').fadeIn('slow');
 		if (jQuery.pushup.options.fadeDelay !== undefined) {
@@ -110,13 +110,13 @@ jQuery.pushup = {
 	    jQuery('#pushup').fadeOut('slow'); 
 	},
 	setReminder: function (hours) {
-		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours })
+		Cookie.set('_pushupBlocked', 'blocked', { duration: 1 / 24 * hours });
 	},
 	resetReminder: function () { 
-	    Cookie.remove('_pushupBlocked') 
+	    Cookie.remove('_pushupBlocked');
 	}
 	
-}
+};
 // jQuery.each(jQuery.pushup.browsVer, function(x,y) {
 // 	if(y) {
 // 		jQuery.pushup.activeBrowser = x;
@@ -136,7 +136,7 @@ var Cookie = {
     },
 
     remove: function (name) { 
-        this.set(name, '', -1) 
+        this.set(name, '', -1);
     },
 
     get: function (name) {
