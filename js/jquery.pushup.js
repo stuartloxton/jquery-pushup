@@ -126,7 +126,6 @@
 			    });
 		    }
 		    image = imgSrc + $.pushup.activeBrowser.toLowerCase();
-		    alert(image);
 		    styles = ($.pushup.browsVer.IE < 7 && $.pushup.browsVer.IE) ? {
 			    filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + image + '.png\'\', sizingMethod=\'crop\')'
 		    } : {
