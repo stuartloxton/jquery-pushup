@@ -90,7 +90,26 @@
 		    });
 	    },
 	    show: function () {
-	        var $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
+	        var $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, image, styles, time;
+	        
+	        function getBasePath(path) {
+	            var basePath; 
+	            if (/^(https?:\/\/|\/)/.test(path)) {
+			        return path;
+		        } else {
+			        $('script[src]').each(function (i, elem) {
+			            var srcFol, $elem = $(elem);
+				        if (/jquery\.pushup\.js$/.test($elem.attr('src'))) {
+					        srcFol =  $elem.attr('src').replace('jquery.pushup.js', '');
+					        basePath = srcFol + path;
+					        return false; // break;
+				        }
+			        });
+		        }
+		        
+		        return basePath;
+	        }
+	        	        
 		    $elm = $(document.createElement('div'))
 		        .attr('id', 'pushup')
 		        .hide()
@@ -124,18 +143,8 @@
 				    event.preventDefault();
 			    });
 		    }
-		    if (/^(https?:\/\/|\/)/.test($.pushup.options.images)) {
-			    imgSrc = $.pushup.options.images;
-		    } else {
-			    $('script[src]').each(function (i, elem) {
-			        var $elem = $(elem);
-				    if (/jquery\.pushup/.test($elem.attr('src'))) {
-					    srcFol =  $elem.attr('src').replace('jquery.pushup.js', '');
-					    imgSrc = srcFol + $.pushup.options.images;
-				    }
-			    });
-		    }
-		    image = imgSrc + $.pushup.activeBrowser.toLowerCase();
+
+		    image = getBasePath($.pushup.options.images) + $.pushup.activeBrowser.toLowerCase();
 		    styles = ($.pushup.browsVer.IE < 7 && $.pushup.browsVer.IE) ? {
 			    filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + image + '.png\'\', sizingMethod=\'crop\')'
 		    } : {
