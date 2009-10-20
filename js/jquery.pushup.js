@@ -77,9 +77,9 @@
 		    Safari: 3
 	    },
 	    init: function () {
-		    $.each($.pushup.browsVer, function (x, y) {
-			    if (y && y < $.pushup.browsers[x]) {
-				    $.pushup.activeBrowser = x;
+		    $.each($.pushup.browsVer, function (i, browserVersion) {
+			    if (browserVersion && browserVersion < $.pushup.browsers[i]) {
+				    $.pushup.activeBrowser = i;
 				    if (!$.pushup.options.ignoreReminder && $.pushup.cookiesEnabled && Cookie.get('_pushupBlocked')) { 
 				        return; 
 				    } else {
@@ -92,35 +92,46 @@
 	    show: function () {
 	        var browser, $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
 		    browser = typeof arguments[0] === 'string' ? arguments[0] : $.pushup.browserUsed || 'IE';
-		    $elm = document.createElement('div');
-		    $elm.style.display = 'none';
-		    $elm.id = 'pushup';
-		    $('body').prepend($elm);
-		    $icon = $(document.createElement('div')).addClass('pushup_icon');
-		    $message = $(document.createElement('span')).addClass('pushup_message');
-		    $messageLink = $(document.createElement('a')).addClass('pushup_messageLink').attr('target', '_blank').append($icon).append($message);
-		    $messageLink.attr("href", $.pushup.updateLinks[$.pushup.activeBrowser]);
-		    $('#pushup').append($messageLink);
-		    $('.pushup_message').html($.pushup.options.message);
+		    $elm = $(document.createElement('div'))
+		        .attr('id', 'pushup')
+		        .hide()
+		        .appendTo('body');
+		    $messageLink = $(document.createElement('a'))
+		        .addClass('pushup_messageLink')
+		        .attr('target', '_blank')
+		        .attr("href", $.pushup.updateLinks[$.pushup.activeBrowser])
+		        .appendTo($elm);
+		    $icon = $(document.createElement('div'))
+		        .addClass('pushup_icon')
+		        .appendTo($messageLink);
+		    $message = $(document.createElement('span'))
+		        .addClass('pushup_message')
+		        .html($.pushup.options.message)
+		        .appendTo($messageLink);
     		
 		    hours = $.pushup.options.reminder.hours;
 		    if (hours && $.pushup.cookiesEnabled) {
 			    H = hours + ' hour' + (hours > 1 ? 's' : '');
 			    messageText = $.pushup.options.reminder.message.replace('#{hours}', H);
-			    $hourElem = $(document.createElement('a')).attr('href', '#').addClass('pushup_reminder').html(messageText);
-			    $('#pushup').append($hourElem);
-			    $('.pushup_reminder').click(function () {
+			    $hourElem = $(document.createElement('a'))
+			        .attr('href', '#')
+			        .addClass('pushup_reminder')
+			        .html(messageText);
+			    $elm.append($hourElem);
+			    $hourElem.click(function (event) {
 				    $.pushup.setReminder($.pushup.options.reminder.hours);
 				    $.pushup.hide();
-				    return false;
+				    				    
+				    event.preventDefault();
 			    });
 		    }
 		    if (/^(https?:\/\/|\/)/.test($.pushup.options.images)) {
 			    imgSrc = $.pushup.options.images;
 		    } else {
-			    $('script[src]').each(function (x, y) {
-				    if (/jquery\.pushup/.test($(y).attr('src'))) {
-					    srcFol =  $(y).attr('src').replace('jquery.pushup.js', '');
+			    $('script[src]').each(function (i, elem) {
+			        var $elem = $(elem);
+				    if (/jquery\.pushup/.test($elem.attr('src'))) {
+					    srcFol =  $elem.attr('src').replace('jquery.pushup.js', '');
 					    imgSrc = srcFol + $.pushup.options.images;
 				    }
 			    });
@@ -131,8 +142,10 @@
 		    } : {
 			    background: 'url(' + image + '.png) no-repeat top left'
 		    };
-		    $('.pushup_icon').css(styles);
-		    $('#pushup').fadeIn('slow');
+		    
+		    $icon.css(styles);
+		    $elm.fadeIn('slow');
+		    
 		    if ($.pushup.options.fadeDelay !== undefined) {
 			    time = $.pushup.options.fadeDelay * 1000;
 			    setTimeout($.pushup.hide, time);
