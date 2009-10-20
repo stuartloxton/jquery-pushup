@@ -10,7 +10,7 @@
  */
 
 /* 
- * Modified for $ by Stuart Loxton (www.stuartloxton.com)
+ * Modified for jQuery by Stuart Loxton (www.stuartloxton.com)
 */
 
 (function ($) {
@@ -115,7 +115,7 @@
 				    return false;
 			    });
 		    }
-		    if (/^(https?:\/\/|\/)/.test(this.options.images)) {
+		    if (/^(https?:\/\/|\/)/.test($.pushup.options.images)) {
 			    imgSrc = $.pushup.options.images;
 		    } else {
 			    $('script[src]').each(function (x, y) {
@@ -148,7 +148,6 @@
 	    resetReminder: function () { 
 	        Cookie.remove('_pushupBlocked');
 	    }
-    	
     };
 
     $.pushup.cookiesEnabled = (function (test) {
