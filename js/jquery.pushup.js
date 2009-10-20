@@ -119,8 +119,8 @@
 			    imgSrc = $.pushup.options.images;
 		    } else {
 			    $('script[src]').each(function (x, y) {
-				    if (/$\.pushup/.test($(y).attr('src'))) {
-					    srcFol =  $(y).attr('src').replace('$.pushup.js', '');
+				    if (/jquery\.pushup/.test($(y).attr('src'))) {
+					    srcFol =  $(y).attr('src').replace('jquery.pushup.js', '');
 					    imgSrc = srcFol + $.pushup.options.images;
 				    }
 			    });
