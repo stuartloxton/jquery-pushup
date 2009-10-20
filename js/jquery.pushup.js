@@ -90,8 +90,7 @@
 		    });
 	    },
 	    show: function () {
-	        var browser, $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
-		    browser = typeof arguments[0] === 'string' ? arguments[0] : $.pushup.browserUsed || 'IE';
+	        var $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, imgSrc, srcFol, image, styles, time;
 		    $elm = $(document.createElement('div'))
 		        .attr('id', 'pushup')
 		        .hide()
