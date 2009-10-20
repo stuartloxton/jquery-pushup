@@ -92,8 +92,8 @@
 	    show: function () {
 	        var $elm, $icon, $message, $messageLink, hours, H, messageText, $hourElem, image, styles, time;
 	        
-	        function getBasePath(path) {
-	            var basePath; 
+	        function rebasePath(path) {
+	            var newPath; 
 	            if (/^(https?:\/\/|\/)/.test(path)) {
 			        return path;
 		        } else {
@@ -101,15 +101,23 @@
 			            var srcFol, $elem = $(elem);
 				        if (/jquery\.pushup\.js$/.test($elem.attr('src'))) {
 					        srcFol =  $elem.attr('src').replace('jquery.pushup.js', '');
-					        basePath = srcFol + path;
+					        newPath = srcFol + path;
 					        return false; // break;
 				        }
 			        });
 		        }
 		        
-		        return basePath;
+		        return newPath;
 	        }
-	        	        
+	        
+	        if ($.pushup.options.stylesheet) {
+	            $(document.createElement('link'))
+	                .attr('rel', 'stylesheet')
+	                .attr('type', 'text/css')
+	                .attr('href', rebasePath($.pushup.options.stylesheet))
+	                .appendTo('head');
+	        }
+	        
 		    $elm = $(document.createElement('div'))
 		        .attr('id', 'pushup')
 		        .hide()
@@ -144,7 +152,7 @@
 			    });
 		    }
 
-		    image = getBasePath($.pushup.options.images) + $.pushup.activeBrowser.toLowerCase();
+		    image = rebasePath($.pushup.options.images) + $.pushup.activeBrowser.toLowerCase();
 		    styles = ($.pushup.browsVer.IE < 7 && $.pushup.browsVer.IE) ? {
 			    filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + image + '.png\'\', sizingMethod=\'crop\')'
 		    } : {
