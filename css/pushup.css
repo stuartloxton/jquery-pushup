@@ -47,7 +47,7 @@
 #pushup .pushup_message {
   position: relative;
   float: left;
-  marginRight: 3px;
+  margin-right: 3px;
   line-height: 22px;
   vertical-align: middle;
 }
